@@ -120,6 +120,27 @@ class TrackersViewController : UIViewController {
         return stackView
     }()
     
+    // MARK: collection view
+    
+    private let collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.backgroundColor = UIColor(named: "White")
+        
+        collectionView.register(
+            TrackersCell.self,
+            forCellWithReuseIdentifier: TrackersCell.identifier
+        )
+        
+        collectionView.register(
+            TrackersCategoryLabel.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "header"
+        )
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+    
+    
     // MARK: Layout
     
     func initComponents() {
