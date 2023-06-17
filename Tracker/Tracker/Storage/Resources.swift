@@ -13,19 +13,19 @@ enum Resources {
     
     enum Strings {
         enum TabBar {
-            static var statistic = "Статистика"
+            static var statistics = "Статистика"
             static var tracker = "Трекеры"
         }
     }
     
     enum Images {
         enum TabBar {
-            static var statistic = UIImage(named: "Statistics")
+            static var statistics = UIImage(named: "Statistics")
             static var tracker = UIImage(named: "Trackers")
         }
         enum Error {
-            static var errorTracker = UIImage(named: "TrackersError")
-            static var errorStatistic = UIImage(named: "StatisticsError")
+            static var statistics = UIImage(named: "StatisticsError")
+            static var tracker = UIImage(named: "TrackersError")
         }
         enum Empty {
             static var emptyTracker = UIImage(named: "Error")

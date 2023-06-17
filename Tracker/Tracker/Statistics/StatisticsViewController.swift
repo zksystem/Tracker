@@ -22,7 +22,7 @@ final class StatisticsViewController: UIViewController {
     private let emptyImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = Resources.Images.Error.errorStatistic
+        imageView.image = Resources.Images.Error.statistics
         return imageView
     }()
     
@@ -31,7 +31,7 @@ final class StatisticsViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.text = "Анализировать пока нечего"
-        label.textColor = UIColor(named: "Black")
+        label.textColor = .appBlack
         return label
     }()
     
@@ -57,7 +57,7 @@ final class StatisticsViewController: UIViewController {
 
 private extension StatisticsViewController {
     func setupContent() {
-        view.backgroundColor = UIColor(named: "White")
+        view.backgroundColor = .appWhite
         view.addSubview(titleLabel)
         view.addSubview(emptyStack)
         

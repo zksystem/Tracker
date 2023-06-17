@@ -25,9 +25,9 @@ final class TabBarController: UITabBarController {
     }
     
     private func configure() {
-        tabBar.tintColor = UIColor(named: "Blue")
-        tabBar.barTintColor = UIColor(named: "Gray")
-        tabBar.backgroundColor = UIColor(named: "White")
+        tabBar.tintColor = .appBlue
+        tabBar.barTintColor = .appGray
+        tabBar.backgroundColor = .appWhite
         
         tabBar.layer.borderColor = UIColor(named: "Gray")?.cgColor
         tabBar.layer.borderWidth = 1
@@ -41,8 +41,8 @@ final class TabBarController: UITabBarController {
             image: Resources.Images.TabBar.tracker,
             tag: Tabs.tracker.rawValue)
         statisticViewController.tabBarItem = UITabBarItem(
-            title: Resources.Strings.TabBar.statistic,
-            image: Resources.Images.TabBar.statistic,
+            title: Resources.Strings.TabBar.statistics,
+            image: Resources.Images.TabBar.statistics,
             tag: Tabs.statistic.rawValue)
 
         let controllers = [trackerViewController,

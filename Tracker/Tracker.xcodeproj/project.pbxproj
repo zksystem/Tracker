@@ -25,6 +25,8 @@
 		65DBAF142A3DB5050041C892 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBAF132A3DB5050041C892 /* TabBarController.swift */; };
 		65DBAF172A3DB5E50041C892 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBAF162A3DB5E50041C892 /* StatisticsViewController.swift */; };
 		65DBAF1A2A3DB6D70041C892 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBAF192A3DB6D70041C892 /* Resources.swift */; };
+		65DBAF1C2A3DD17B0041C892 /* DateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBAF1B2A3DD17B0041C892 /* DateExt.swift */; };
+		65DBAF1E2A3DD2260041C892 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBAF1D2A3DD2260041C892 /* UIColorExt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		65DBAF132A3DB5050041C892 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		65DBAF162A3DB5E50041C892 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		65DBAF192A3DB6D70041C892 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		65DBAF1B2A3DD17B0041C892 /* DateExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExt.swift; sourceTree = "<group>"; };
+		65DBAF1D2A3DD2260041C892 /* UIColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				65DBAF0E2A3DAFEC0041C892 /* IntExt.swift */,
+				65DBAF1B2A3DD17B0041C892 /* DateExt.swift */,
+				65DBAF1D2A3DD2260041C892 /* UIColorExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -335,6 +341,7 @@
 			files = (
 				65DBAF092A3788B90041C892 /* TrackersCell.swift in Sources */,
 				658E9B3D2A1D448E0030A1D3 /* Tracker.xcdatamodeld in Sources */,
+				65DBAF1C2A3DD17B0041C892 /* DateExt.swift in Sources */,
 				658E9B372A1D448E0030A1D3 /* ViewController.swift in Sources */,
 				65DBAF142A3DB5050041C892 /* TabBarController.swift in Sources */,
 				65DBAF112A3DB3A70041C892 /* TrackersCategoryLabel.swift in Sources */,
@@ -343,6 +350,7 @@
 				6573B9572A27CB9F008AEA7A /* TrackersViewController.swift in Sources */,
 				658E9B332A1D448E0030A1D3 /* AppDelegate.swift in Sources */,
 				65DBAF1A2A3DB6D70041C892 /* Resources.swift in Sources */,
+				65DBAF1E2A3DD2260041C892 /* UIColorExt.swift in Sources */,
 				658E9B352A1D448E0030A1D3 /* SceneDelegate.swift in Sources */,
 				65DBAF0C2A3DAE9B0041C892 /* Tracker.swift in Sources */,
 			);

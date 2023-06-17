@@ -26,7 +26,7 @@ class TrackersViewController : UIViewController {
             target: self,
             action: #selector(didTapAddButton)
         )
-        button.tintColor = UIColor(named: "Black")
+        button.tintColor = .appBlack
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -44,7 +44,7 @@ class TrackersViewController : UIViewController {
         let label = UILabel()
         label.text = "Трекеры"
         label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
-        label.textColor = UIColor(named: "Black")
+        label.textColor = .appBlack
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -55,7 +55,7 @@ class TrackersViewController : UIViewController {
         let label = UILabel()
         label.text = "Что будем отслеживать?"
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.textColor = UIColor(named: "Black")
+        label.textColor = .appBlack
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -64,7 +64,7 @@ class TrackersViewController : UIViewController {
     
     private let statusImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "Error")
+        imageView.image = Resources.Images.Empty.emptyTracker
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -73,8 +73,8 @@ class TrackersViewController : UIViewController {
     
     private lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
-        datePicker.backgroundColor = UIColor(named: "White")
-        datePicker.tintColor = UIColor(named: "Blue")
+        datePicker.backgroundColor = .appWhite
+        datePicker.tintColor = .appBlue
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .compact
         datePicker.calendar = Calendar(identifier: .iso8601)
@@ -124,7 +124,7 @@ class TrackersViewController : UIViewController {
     
     private let collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.backgroundColor = UIColor(named: "White")
+        collectionView.backgroundColor = .appWhite
         
         collectionView.register(
             TrackersCell.self,
@@ -144,7 +144,7 @@ class TrackersViewController : UIViewController {
     // MARK: Layout
     
     func initComponents() {
-        view.backgroundColor = UIColor(named: "White")
+        view.backgroundColor = .appWhite
         
         view.addSubview(addButton)
         view.addSubview(titleLabel)
