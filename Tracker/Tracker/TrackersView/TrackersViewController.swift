@@ -85,6 +85,14 @@ class TrackersViewController : UIViewController {
         present(navigationController, animated: true)
     }
     
+    //MARK: - ChangeDatePicker
+    
+    @objc
+    private func didChangedDatePicker(_ sender: UIDatePicker) {
+        currentDate = Date.from(date: sender.date)!
+        collectionView.reloadData()
+    }
+    
     // MARK: - Title label definition
     
     private let titleLabel: UILabel = {
@@ -218,6 +226,9 @@ class TrackersViewController : UIViewController {
         
         statusStack.addArrangedSubview(statusImageView)
         statusStack.addArrangedSubview(statusLabel)
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
         
         // Constraints
         

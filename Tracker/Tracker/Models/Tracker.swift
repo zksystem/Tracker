@@ -75,7 +75,7 @@ enum Weekday: String, CaseIterable, Comparable {
         }
     }
 
-    //MARK: Comparator
+    //MARK: - Comparator
     
     static func < (lhs: Weekday, rhs: Weekday) -> Bool {
         guard

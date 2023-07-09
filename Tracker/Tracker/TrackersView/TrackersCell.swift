@@ -73,7 +73,7 @@ final class TrackersCell: UICollectionViewCell {
         let uiView = UIView()
         uiView.layer.borderWidth = 1
         uiView.layer.cornerRadius = 16
-        uiView.layer.borderColor = UIColor(named: "Gray")?.cgColor //TODO: check this color
+        uiView.layer.borderColor = UIColor(red: 174 / 255, green: 175 / 255, blue: 180 / 255, alpha: 0.3).cgColor
         uiView.translatesAutoresizingMaskIntoConstraints = false
         return uiView
     }()
@@ -88,7 +88,7 @@ final class TrackersCell: UICollectionViewCell {
     private let iconView: UIView = {
         let uiView = UIView()
         uiView.layer.cornerRadius = 12
-        uiView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.3) //TODO: check this color
+        uiView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.3)
         uiView.translatesAutoresizingMaskIntoConstraints = false
         return uiView
     }()
