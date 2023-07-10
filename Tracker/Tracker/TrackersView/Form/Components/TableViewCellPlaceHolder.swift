@@ -1,5 +1,5 @@
 //
-//  ListCell.swift
+//  TableViewCellPlaceHolder.swift
 //  Tracker
 //
 //  Created by Konstantin Zuykov on 17.06.2023.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class ListCell: UITableViewCell {
+final class TableViewCellPlaceHolder: UITableViewCell {
     
     // MARK: - Layout elements
     
-    private lazy var listItem = ListItem()
+    private lazy var listItem = ListCellPlaceHolder()
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +63,7 @@ final class ListCell: UITableViewCell {
     
     // MARK: - Methods
     
-    func configure(label: String, value: String?, position: ListItem.Position) {
+    func configure(label: String, value: String?, position: ListCellPlaceHolder.Position) {
         listItem.configure(with: position)
         nameLabel.text = label
         
@@ -75,7 +75,7 @@ final class ListCell: UITableViewCell {
 
 // MARK: - Layout methods
 
-private extension ListCell {
+private extension TableViewCellPlaceHolder {
     func setupContent() {
         selectionStyle = .none
         contentView.addSubview(listItem)

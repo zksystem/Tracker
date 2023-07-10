@@ -109,7 +109,7 @@ extension ScheduleViewController: UITableViewDataSource {
         guard let weekDayCell = tableView.dequeueReusableCell(withIdentifier: WeekDayCell.identifier) as? WeekDayCell else { return UITableViewCell() }
         
         let weekday = Weekday.allCases[indexPath.row]
-        var position: ListItem.Position
+        var position: ListCellPlaceHolder.Position
         
         switch indexPath.row {
         case 0:
@@ -134,7 +134,7 @@ extension ScheduleViewController: UITableViewDataSource {
 
 extension ScheduleViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        ListItem.height
+        ListCellPlaceHolder.height
     }
 }
 

@@ -17,7 +17,7 @@ final class WeekDayCell: UITableViewCell {
     
     // MARK: - Layout elements
     
-    private lazy var listItem = ListItem()
+    private lazy var listItem = ListCellPlaceHolder()
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -62,7 +62,7 @@ final class WeekDayCell: UITableViewCell {
     
     // MARK: - Methods
     
-    func configure(with weekday: Weekday, isSelected: Bool, position: ListItem.Position) {
+    func configure(with weekday: Weekday, isSelected: Bool, position: ListCellPlaceHolder.Position) {
         self.weekday = weekday
         listItem.configure(with: position)
         nameLabel.text = weekday.rawValue

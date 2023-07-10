@@ -22,7 +22,7 @@ final class TrackersFormViewController: UIViewController {
         return textField
     }()
     
-    private let validationMessage: UILabel = {
+    private lazy var validationMessage: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 17)
@@ -31,12 +31,12 @@ final class TrackersFormViewController: UIViewController {
         return label
     }()
     
-    private let parametersTableView: UITableView = {
+    private lazy var parametersTableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         table.separatorStyle = .none
         table.isScrollEnabled = true
-        table.register(ListCell.self, forCellReuseIdentifier: ListCell.identifier)
+        table.register(TableViewCellPlaceHolder.self, forCellReuseIdentifier: TableViewCellPlaceHolder.identifier)
         return table
     }()
     
@@ -53,7 +53,7 @@ final class TrackersFormViewController: UIViewController {
         return button
     }()
     
-    private let buttonsStack: UIStackView = {
+    private lazy var buttonsStack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.spacing = 8
@@ -241,14 +241,14 @@ private extension TrackersFormViewController {
             textField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             textField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            textField.heightAnchor.constraint(equalToConstant: ListItem.height),
+            textField.heightAnchor.constraint(equalToConstant: ListCellPlaceHolder.height),
 
             validationMessage.centerXAnchor.constraint(equalTo: textField.centerXAnchor),
             validationMessage.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 8),
 
             parametersTableView.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
             parametersTableView.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
-            parametersTableView.heightAnchor.constraint(equalToConstant: data.schedule == nil ? ListItem.height : 2 *  ListItem.height),
+            parametersTableView.heightAnchor.constraint(equalToConstant: data.schedule == nil ? ListCellPlaceHolder.height : 2 *  ListCellPlaceHolder.height),
 
             buttonsStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             buttonsStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
@@ -266,10 +266,10 @@ extension TrackersFormViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let listCell = tableView.dequeueReusableCell(withIdentifier: ListCell.identifier) as? ListCell
+        guard let listCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellPlaceHolder.identifier) as? TableViewCellPlaceHolder
         else { return UITableViewCell() }
 
-        var position: ListItem.Position
+        var position: ListCellPlaceHolder.Position
         var value: String? = nil
 
         if data.schedule == nil {
@@ -302,7 +302,7 @@ extension TrackersFormViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        ListItem.height
+        ListCellPlaceHolder.height
     }
 }
 

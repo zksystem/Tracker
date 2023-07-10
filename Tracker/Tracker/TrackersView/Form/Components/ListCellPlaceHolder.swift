@@ -1,5 +1,5 @@
 //
-//  ListItem.swift
+//  ListCellPlaceHolder.swift
 //  Tracker
 //
 //  Created by Konstantin Zuykov on 17.06.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ListItem: UIView {
+final class ListCellPlaceHolder: UIView {
     
     // MARK: - Layout elements
     
@@ -66,7 +66,7 @@ final class ListItem: UIView {
     }
 }
 
-extension ListItem {
+extension ListCellPlaceHolder {
     enum Position {
         case first, middle, last, alone
     }
