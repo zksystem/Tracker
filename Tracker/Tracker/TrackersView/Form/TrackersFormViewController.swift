@@ -142,6 +142,7 @@ final class TrackersFormViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initializeHideKeyboard()
         setupContent()
         setupConstraints()
         
@@ -313,6 +314,19 @@ extension TrackersFormViewController: ScheduleViewControllerDelegate {
         data.schedule = schedule
         parametersTableView.reloadData()
         dismiss(animated: true)
+    }
+}
+
+//MARK: - Hiding keyboard on tap
+
+extension TrackersFormViewController {
+    func initializeHideKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 
