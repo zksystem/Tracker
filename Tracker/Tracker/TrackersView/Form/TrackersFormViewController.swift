@@ -192,7 +192,6 @@ final class TrackersFormViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        initializeHideKeyboard()
         setupContent()
         setupConstraints()
         
@@ -200,6 +199,7 @@ final class TrackersFormViewController: UIViewController {
         data.color = colors.randomElement()
         
         checkFromValidation()
+        initializeHideKeyboard()
     }
     
     // MARK: - Actions
