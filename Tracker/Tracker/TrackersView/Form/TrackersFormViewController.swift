@@ -118,7 +118,7 @@ final class TrackersFormViewController: UIViewController {
             checkFromValidation()
         }
     }
-
+    
     private var scheduleString: String? {
         guard let schedule = data.schedule else { return nil }
         if schedule.count == Weekday.allCases.count { return "Каждый день" }
@@ -150,6 +150,7 @@ final class TrackersFormViewController: UIViewController {
             }
         }
     }
+    
     private var validationMessageHeightConstraint: NSLayoutConstraint?
     private var parametersTableViewTopConstraint: NSLayoutConstraint?
     private let parameters = ["Категория", "Расписание"]
@@ -194,12 +195,8 @@ final class TrackersFormViewController: UIViewController {
         
         setupContent()
         setupConstraints()
-        
-        data.emoji = emojis.randomElement()
-        data.color = colors.randomElement()
-        
+   
         checkFromValidation()
-        initializeHideKeyboard()
     }
     
     // MARK: - Actions
@@ -309,40 +306,42 @@ private extension TrackersFormViewController {
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-
+            
             contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
             
+            textField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            textField.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
+            textField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            textField.heightAnchor.constraint(equalToConstant: ListCellPlaceHolder.height),
+            
+            validationMessage.centerXAnchor.constraint(equalTo: textField.centerXAnchor),
+            validationMessage.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 8),
+            
+            parametersTableView.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
+            parametersTableView.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
+            parametersTableView.heightAnchor.constraint(equalToConstant: data.schedule == nil ? ListCellPlaceHolder.height : 2 *  ListCellPlaceHolder.height),
+            
             emojisCollection.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             emojisCollection.topAnchor.constraint(equalTo: parametersTableView.bottomAnchor, constant: 32),
             emojisCollection.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             emojisCollection.heightAnchor.constraint(equalToConstant: CGFloat(emojis.count) / params.cellCount * params.height + 18 + params.topInset + params.bottomInset),
-
+            
             colorsCollection.leadingAnchor.constraint(equalTo: emojisCollection.leadingAnchor),
             colorsCollection.topAnchor.constraint(equalTo: emojisCollection.bottomAnchor, constant: 16),
             colorsCollection.trailingAnchor.constraint(equalTo: emojisCollection.trailingAnchor),
             colorsCollection.heightAnchor.constraint(equalToConstant: CGFloat(colors.count) / params.cellCount * params.height + 18 + params.topInset + params.bottomInset),
             
-            textField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
-            textField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            textField.heightAnchor.constraint(equalToConstant: ListCellPlaceHolder.height),
-
-            validationMessage.centerXAnchor.constraint(equalTo: textField.centerXAnchor),
-            validationMessage.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 8),
-
-            parametersTableView.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
-            parametersTableView.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
-            parametersTableView.heightAnchor.constraint(equalToConstant: data.schedule == nil ? ListCellPlaceHolder.height : 2 *  ListCellPlaceHolder.height),
-
-            buttonsStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            buttonsStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            buttonsStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            buttonsStack.heightAnchor.constraint(equalToConstant: 60)
+            buttonsStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            buttonsStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            buttonsStack.topAnchor.constraint(equalTo: colorsCollection.bottomAnchor, constant: 16),
+            buttonsStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            buttonsStack.heightAnchor.constraint(equalToConstant: 60),
         ])
+        
     }
 }
 
@@ -359,16 +358,16 @@ extension TrackersFormViewController: UITextFieldDelegate {
 
 extension TrackersFormViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         data.schedule == nil ?  1 :  2
+        data.schedule == nil ?  1 :  2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let listCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellPlaceHolder.identifier) as? TableViewCellPlaceHolder
         else { return UITableViewCell() }
-
+        
         var position: ListCellPlaceHolder.Position
         var value: String? = nil
-
+        
         if data.schedule == nil {
             position = .alone
             value = category?.label
@@ -376,7 +375,7 @@ extension TrackersFormViewController: UITableViewDataSource {
             position = indexPath.row == 0 ? .first : .last
             value = indexPath.row == 0 ? category?.label : scheduleString
         }
-
+        
         listCell.configure(label: parameters[indexPath.row], value: value, position: position)
         return listCell
     }
