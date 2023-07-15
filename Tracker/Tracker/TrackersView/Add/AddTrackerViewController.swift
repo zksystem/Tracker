@@ -92,7 +92,7 @@ final class AddTrackerViewController: UIViewController {
 }
 // MARK: - Layout methods
 
-private extension AddTrackerViewController {
+extension AddTrackerViewController {
     
     func setupContent() {
         title = "Создание трекера"
