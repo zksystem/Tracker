@@ -93,20 +93,19 @@ final class TrackerStore: NSObject {
         return fetchedResultsController.fetchedObjects?.first
     }
     
-    func loadFilteredTrackers(date: Date, searchString: String) throws {
+    func loadFilteredTrackers(date: Date?, searchString: String) throws {
+        
+        guard let date = date else {
+            return
+        }
+        
         var predicates = [NSPredicate]()
         
         let weekdayIndex = Calendar.current.component(.weekday, from: date)
         let iso860WeekdayIndex = weekdayIndex > 1 ? weekdayIndex - 2 : weekdayIndex + 5
         
         var regex = ""
-        for index in 0..<7 {
-            if index == iso860WeekdayIndex {
-                regex += "1"
-            } else {
-                regex += "."
-            }
-        }
+        var _ = (0..<7).map { $0 == iso860WeekdayIndex ? regex.append("1") : regex.append(".") }
         
         predicates.append(NSPredicate(
             format: "%K == nil OR (%K != nil AND %K MATCHES[c] %@)",
@@ -160,12 +159,7 @@ extension TrackerStore: TrackerStoreProtocol {
     
     func tracker(at indexPath: IndexPath) -> Tracker? {
         let trackerCoreData = fetchedResultsController.object(at: indexPath)
-        do {
-            let tracker = try makeTracker(from: trackerCoreData)
-            return tracker
-        } catch {
-            return nil
-        }
+        return try? makeTracker(from: trackerCoreData)
     }
     
     func addTracker(_ tracker: Tracker, with category: TrackerCategory) throws {

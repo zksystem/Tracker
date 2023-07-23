@@ -33,10 +33,9 @@ class TrackersViewController : UIViewController {
         }
     }
     
-    private var currentDate = Date.from(date: Date())!
+    private var currentDate = Date.from(date: Date())
     private var completedTrackers: Set<TrackerRecord> = []
-    
-    
+        
     // MARK: - View did load
     
     override func viewDidLoad() {
@@ -262,8 +261,6 @@ class TrackersViewController : UIViewController {
             filterButton.widthAnchor.constraint(equalToConstant: 114),
             filterButton.heightAnchor.constraint(equalToConstant: 50)
         ])
-        
-        
     }
 }
 
@@ -310,6 +307,10 @@ extension TrackersViewController: TrackersCellDelegate {
             cell.toggleCompletedButton(to: false)
             cell.decreaseCount()
         } else {
+            guard let currentDate = currentDate else {
+                return
+            }
+            
             let trackerRecord = TrackerRecord(trackerId: tracker.id, date: currentDate)
             try? trackerRecordStore.add(trackerRecord)
             cell.toggleCompletedButton(to: true)

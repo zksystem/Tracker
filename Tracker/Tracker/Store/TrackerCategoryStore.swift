@@ -19,7 +19,11 @@ final class TrackerCategoryStore: NSObject {
     // MARK: - Lifecycle
     
     convenience override init() {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("Сouldn't get app AppDelegate")
+        }
+
+        let context = appDelegate.persistentContainer.viewContext
         try! self.init(context: context)
     }
     
@@ -35,7 +39,15 @@ final class TrackerCategoryStore: NSObject {
     func categoryCoreData(with id: UUID) throws -> TrackerCategoryCoreData {
         let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
         request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerCategoryCoreData.categoryId), id.uuidString)
-        let category = try context.fetch(request)
+        let category: [TrackerCategoryCoreData]
+        do {
+            category = try context.fetch(request)
+        } catch {
+            throw StoreError.fetchError
+        }
+        if(category.isEmpty) {
+            return TrackerCategoryCoreData()
+        }
         return category[0]
     }
     
@@ -56,7 +68,7 @@ final class TrackerCategoryStore: NSObject {
             categories = try result.map({ try makeCategory(from: $0) })
             return
         }
-        
+    
         let _ = [
             TrackerCategory(label: "Домашний уют"),
             TrackerCategory(label: "Радостные мелочи")
@@ -77,6 +89,7 @@ final class TrackerCategoryStore: NSObject {
 extension TrackerCategoryStore {
     enum StoreError: Error {
         case decodeError
+        case fetchError
     }
 }
 

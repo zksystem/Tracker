@@ -61,7 +61,11 @@ final class TrackerRecordStore: NSObject {
         delegate?.didUpdateRecords(completedTrackers)
     }
     
-    func loadCompletedTrackers(by date: Date) throws {
+    func loadCompletedTrackers(by date: Date?) throws {
+        guard let date = date else {
+            return
+        }
+        
         let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "TrackerRecordCoreData")
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerRecordCoreData.date), date as NSDate)
