@@ -307,14 +307,16 @@ extension TrackersViewController: TrackersCellDelegate {
             cell.toggleCompletedButton(to: false)
             cell.decreaseCount()
         } else {
-            guard let currentDate = currentDate else {
-                return
+            if let currentDate = currentDate {
+                let trackerRecord = TrackerRecord(trackerId: tracker.id, date: currentDate)
+                do {
+                    try trackerRecordStore.add(trackerRecord)
+                    cell.toggleCompletedButton(to: true)
+                    cell.increaseCount()
+                } catch let error {
+                    fatalError("Error increase tracker \(error)")
+                }
             }
-            
-            let trackerRecord = TrackerRecord(trackerId: tracker.id, date: currentDate)
-            try? trackerRecordStore.add(trackerRecord)
-            cell.toggleCompletedButton(to: true)
-            cell.increaseCount()
         }
     }
 }
