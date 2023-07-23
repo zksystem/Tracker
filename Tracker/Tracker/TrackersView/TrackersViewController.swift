@@ -305,14 +305,13 @@ extension TrackersViewController: AddTrackerViewControllerDelegate {
 
 extension TrackersViewController: TrackersCellDelegate {
     func didTapCompleteButton(of cell: TrackersCell, with tracker: Tracker) {
-        let trackerRecord = TrackerRecord(trackerId: tracker.id, date: currentDate)
-        
-        if completedTrackers.contains(where: { $0.date == currentDate && $0.trackerId == tracker.id }) {
-            completedTrackers.remove(trackerRecord)
+        if let recordToRemove = completedTrackers.first(where: { $0.date == currentDate && $0.trackerId == tracker.id }) {
+            try? trackerRecordStore.remove(recordToRemove)
             cell.toggleCompletedButton(to: false)
             cell.decreaseCount()
         } else {
-            completedTrackers.insert(trackerRecord)
+            let trackerRecord = TrackerRecord(trackerId: tracker.id, date: currentDate)
+            try? trackerRecordStore.add(trackerRecord)
             cell.toggleCompletedButton(to: true)
             cell.increaseCount()
         }
