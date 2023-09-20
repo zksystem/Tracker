@@ -14,12 +14,9 @@ final class OnboardingViewController: UIPageViewController {
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = 0
-        
         pageControl.currentPageIndicatorTintColor = .appBlack
-        
         return pageControl
     }()
     
@@ -99,12 +96,16 @@ extension OnboardingViewController: UIPageViewControllerDataSource {
         _ pageViewController: UIPageViewController,
         viewControllerBefore viewController: UIViewController
     ) -> UIViewController? {
-        guard let currentIndex = pages.firstIndex(of: viewController) else { return nil }
+
+        guard let currentIndex = pages.firstIndex(of: viewController) else {
+            return nil
+        }
         
         let prevIndex = currentIndex - 1
-        
-        guard prevIndex >= 0 else { return nil }
-        
+        guard prevIndex >= 0 else {
+            return nil
+        }
+
         return pages[prevIndex]
     }
     
@@ -112,12 +113,16 @@ extension OnboardingViewController: UIPageViewControllerDataSource {
         _ pageViewController: UIPageViewController,
         viewControllerAfter viewController: UIViewController
     ) -> UIViewController? {
-        guard let currentIndex = pages.firstIndex(of: viewController) else { return nil }
+
+        guard let currentIndex = pages.firstIndex(of: viewController) else {
+            return nil
+        }
         
         let nextIndex = currentIndex + 1
-        
-        guard nextIndex < pages.count else { return nil }
-        
+        guard nextIndex < pages.count else {
+            return nil
+        }
+
         return pages[nextIndex]
     }
 }
@@ -134,7 +139,9 @@ extension OnboardingViewController: UIPageViewControllerDelegate {
         guard
             let currentViewController = pageViewController.viewControllers?.first,
             let currentIndex = pages.firstIndex(of: currentViewController)
-        else { return }
+        else {
+            return
+        }
         
         pageControl.currentPage = currentIndex
     }

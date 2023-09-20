@@ -17,7 +17,6 @@ final class RootViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let tabBarController = TabBarController()
 
         guard let _ = isOnboardingCompleted else {
@@ -32,7 +31,6 @@ final class RootViewController: UIViewController {
                 }
                 
                 self.isOnboardingCompleted = true
-
                 self.removeController(onboardingViewController)
                 self.addController(tabBarController)
             }
@@ -52,7 +50,9 @@ final class RootViewController: UIViewController {
         addChild(viewController)
         view.addSubview(viewController.view)
         
-        guard let tabBarView = viewController.view else { return }
+        guard let tabBarView = viewController.view else {
+            return
+        }
         
         tabBarView.translatesAutoresizingMaskIntoConstraints = false
         
