@@ -8,7 +8,7 @@
 import UIKit
 
 final class RoundedButton: UIButton {
-    convenience init(color: UIColor = .appBlack, title: String) {
+    convenience init(color: UIColor = .appBlack, titleColor: UIColor = .appWhite, title: String) {
         self.init(type: .system)
         
         setTitle(title, for: .normal)
