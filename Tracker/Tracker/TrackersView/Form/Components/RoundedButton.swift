@@ -15,7 +15,7 @@ final class RoundedButton: UIButton {
         backgroundColor = color
         
         translatesAutoresizingMaskIntoConstraints = false
-        setTitleColor(.appWhite, for: .normal)
+        setTitleColor(titleColor, for: .normal)
         titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         layer.cornerRadius = 16
     }

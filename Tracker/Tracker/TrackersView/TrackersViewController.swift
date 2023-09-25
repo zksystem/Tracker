@@ -294,6 +294,7 @@ extension TrackersViewController: AddTrackerViewControllerDelegate {
         let trackersFormViewController = TrackersFormViewController(type: type)
         trackersFormViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: trackersFormViewController)
+        navigationController.isModalInPresentation = true
         present(navigationController, animated: true)
     }
 }
@@ -330,6 +331,7 @@ extension TrackersViewController: TrackersFormViewControllerDelegate {
     }
     
     func didTapCancelButton() {
+        collectionView.reloadData()
         dismiss(animated: true)
     }
 }

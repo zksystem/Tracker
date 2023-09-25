@@ -113,7 +113,7 @@ final class TrackersFormViewController: UIViewController {
         }
     }
     
-    private lazy var category: TrackerCategory? = trackerCategoryStore.categories.randomElement() {
+    private lazy var category: TrackerCategory? = nil { //trackerCategoryStore.categories.randomElement() {
         didSet {
             checkFromValidation()
         }
@@ -386,13 +386,20 @@ extension TrackersFormViewController: UITableViewDataSource {
 extension TrackersFormViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if (indexPath.row != 0) {
+        switch indexPath.row {
+        case 0:
+            let categoriesViewController = CategoriesViewController(selectedCategory: category)
+            categoriesViewController.delegate = self
+            let navigationController = UINavigationController(rootViewController: categoriesViewController)
+            navigationController.isModalInPresentation = true
+            present(navigationController, animated: true)
+        case 1:
             guard let schedule = data.schedule else { return }
             let scheduleViewController = ScheduleViewController(selectedWeekdays: schedule)
             scheduleViewController.delegate = self
             let navigationController = UINavigationController(rootViewController: scheduleViewController)
             present(navigationController, animated: true)
-        } else {
+        default:
             return
         }
     }
@@ -558,3 +565,11 @@ extension TrackersFormViewController {
     }
 }
 
+
+extension TrackersFormViewController: CategoriesViewControllerDelegate {
+    func didConfirm(_ category: TrackerCategory) {
+        self.category = category
+        parametersTableView.reloadData()
+        dismiss(animated: true)
+    }
+}
