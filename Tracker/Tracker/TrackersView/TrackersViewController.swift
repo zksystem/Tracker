@@ -81,6 +81,12 @@ class TrackersViewController : UIViewController {
     @objc
     private func didChangedDatePicker(_ sender: UIDatePicker) {
         currentDate = Date.from(date: sender.date)!
+        
+        do {
+            try trackerStore.loadFilteredTrackers(date: currentDate, searchString: searchText)
+            try trackerRecordStore.loadCompletedTrackers(by: currentDate)
+        } catch {}
+        
         collectionView.reloadData()
     }
     
@@ -143,18 +149,10 @@ class TrackersViewController : UIViewController {
             datePicker.locale = Locale(identifier: "ru_RU")
         }
         
-        datePicker.addTarget(self, action: #selector(didDatePicked), for: .valueChanged)
+        datePicker.addTarget(self, action: #selector(didChangedDatePicker), for: .valueChanged)
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         return datePicker
     }()
-    
-    // MARK: DatePicker action
-    
-    @objc
-    private func didDatePicked(_ sender: UIDatePicker) {
-        currentDate = Date.from(date: sender.date)!
-        collectionView.reloadData()
-    }
     
     // MARK: Search bar
     
