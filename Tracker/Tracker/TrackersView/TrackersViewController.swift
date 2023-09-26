@@ -94,7 +94,13 @@ class TrackersViewController : UIViewController {
         if trackerStore.numberOfTrackers == 0 {
             statusStack.isHidden = false
             filterButton.isHidden = true
-            statusLabel.text = "Ничего не найдено"
+            if(searchText.isEmpty) {
+                statusLabel.text = "Что будем отслеживать?"
+                statusImageView.image = Resources.Images.Empty.emptyTracker
+            } else {
+                statusLabel.text = "Ничего не найдено"
+                statusImageView.image = Resources.Images.Error.tracker
+            }
         } else {
             statusStack.isHidden = true
             filterButton.isHidden = true
