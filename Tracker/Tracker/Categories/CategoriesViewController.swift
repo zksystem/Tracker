@@ -173,11 +173,7 @@ extension CategoriesViewController: UITableViewDelegate {
 
 extension CategoriesViewController: CategoriesViewModelDelegate {
     func didUpdateCategories() {
-        if viewModel.categories.isEmpty {
-            notFoundStack.isHidden = false
-        } else {
-            notFoundStack.isHidden = true
-        }
+        notFoundStack.isHidden = !viewModel.categories.isEmpty
         categoriesTableView.reloadData()
     }
     

@@ -88,6 +88,7 @@ class TrackersViewController : UIViewController {
         if trackerStore.numberOfTrackers == 0 {
             statusStack.isHidden = false
             filterButton.isHidden = true
+            statusLabel.text = "Ничего не найдено"
         } else {
             statusStack.isHidden = true
             filterButton.isHidden = true

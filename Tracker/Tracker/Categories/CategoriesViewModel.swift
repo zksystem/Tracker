@@ -49,11 +49,7 @@ final class CategoriesViewModel {
     }
     
     func handleCategoryFormConfirm(data: TrackerCategory.Data) {
-        if categories.contains(where: { $0.id == data.id }) {
-            updateCategory(with: data)
-        } else {
-            addCategory(with: data.label)
-        }
+        categories.contains(where: { $0.id == data.id }) ?  updateCategory(with: data) : addCategory(with: data.label)
     }
     
     func deleteCategory(_ category: TrackerCategory) {
