@@ -8,14 +8,14 @@
 import UIKit
 
 final class RoundedButton: UIButton {
-    convenience init(color: UIColor = .appBlack, title: String) {
+    convenience init(color: UIColor = .appBlack, titleColor: UIColor = .appWhite, title: String) {
         self.init(type: .system)
         
         setTitle(title, for: .normal)
         backgroundColor = color
         
         translatesAutoresizingMaskIntoConstraints = false
-        setTitleColor(.appWhite, for: .normal)
+        setTitleColor(titleColor, for: .normal)
         titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         layer.cornerRadius = 16
     }

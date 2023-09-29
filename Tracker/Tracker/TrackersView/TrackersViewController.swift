@@ -81,6 +81,12 @@ class TrackersViewController : UIViewController {
     @objc
     private func didChangedDatePicker(_ sender: UIDatePicker) {
         currentDate = Date.from(date: sender.date)!
+        
+        do {
+            try trackerStore.loadFilteredTrackers(date: currentDate, searchString: searchText)
+            try trackerRecordStore.loadCompletedTrackers(by: currentDate)
+        } catch {}
+        
         collectionView.reloadData()
     }
     
@@ -88,6 +94,13 @@ class TrackersViewController : UIViewController {
         if trackerStore.numberOfTrackers == 0 {
             statusStack.isHidden = false
             filterButton.isHidden = true
+            if(searchText.isEmpty) {
+                statusLabel.text = "Что будем отслеживать?"
+                statusImageView.image = Resources.Images.Empty.emptyTracker
+            } else {
+                statusLabel.text = "Ничего не найдено"
+                statusImageView.image = Resources.Images.Error.tracker
+            }
         } else {
             statusStack.isHidden = true
             filterButton.isHidden = true
@@ -142,18 +155,10 @@ class TrackersViewController : UIViewController {
             datePicker.locale = Locale(identifier: "ru_RU")
         }
         
-        datePicker.addTarget(self, action: #selector(didDatePicked), for: .valueChanged)
+        datePicker.addTarget(self, action: #selector(didChangedDatePicker), for: .valueChanged)
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         return datePicker
     }()
-    
-    // MARK: DatePicker action
-    
-    @objc
-    private func didDatePicked(_ sender: UIDatePicker) {
-        currentDate = Date.from(date: sender.date)!
-        collectionView.reloadData()
-    }
     
     // MARK: Search bar
     
@@ -294,6 +299,7 @@ extension TrackersViewController: AddTrackerViewControllerDelegate {
         let trackersFormViewController = TrackersFormViewController(type: type)
         trackersFormViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: trackersFormViewController)
+        navigationController.isModalInPresentation = true
         present(navigationController, animated: true)
     }
 }
@@ -330,6 +336,7 @@ extension TrackersViewController: TrackersFormViewControllerDelegate {
     }
     
     func didTapCancelButton() {
+        collectionView.reloadData()
         dismiss(animated: true)
     }
 }
