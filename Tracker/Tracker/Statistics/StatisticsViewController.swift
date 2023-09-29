@@ -14,7 +14,7 @@ final class StatisticsViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Статистика"
+        label.text = NSLocalizedString("tab_statistics", tableName: "Localizable", comment: "tab_statistics")
         label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         return label
     }()
@@ -30,7 +30,7 @@ final class StatisticsViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.text = "Анализировать пока нечего"
+        label.text = NSLocalizedString("noghing_to_analyze", tableName: "Localizable", comment: "noghing_to_analyze") //"Анализировать пока нечего"
         label.textColor = .appBlack
         return label
     }()

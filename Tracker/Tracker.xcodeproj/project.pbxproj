@@ -24,7 +24,6 @@
 		658E9B332A1D448E0030A1D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658E9B322A1D448E0030A1D3 /* AppDelegate.swift */; };
 		658E9B352A1D448E0030A1D3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658E9B342A1D448E0030A1D3 /* SceneDelegate.swift */; };
 		658E9B372A1D448E0030A1D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658E9B362A1D448E0030A1D3 /* ViewController.swift */; };
-		658E9B3A2A1D448E0030A1D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 658E9B382A1D448E0030A1D3 /* Main.storyboard */; };
 		658E9B3D2A1D448E0030A1D3 /* Tracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 658E9B3B2A1D448E0030A1D3 /* Tracker.xcdatamodeld */; };
 		658E9B3F2A1D448F0030A1D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658E9B3E2A1D448F0030A1D3 /* Assets.xcassets */; };
 		658E9B422A1D448F0030A1D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 658E9B402A1D448F0030A1D3 /* LaunchScreen.storyboard */; };
@@ -37,6 +36,8 @@
 		659984B42A60E3C900D1968B /* UIColorMarshalling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659984B32A60E3C900D1968B /* UIColorMarshalling.swift */; };
 		659984B62A60EBCF00D1968B /* SelectionCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659984B52A60EBCF00D1968B /* SelectionCellProtocol.swift */; };
 		65CF87222AC6F2880054DA5C /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CF87212AC6F2880054DA5C /* Analytics.swift */; };
+		65CF872B2AC714710054DA5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65CF872A2AC714700054DA5C /* Main.storyboard */; };
+		65CF87302AC715BF0054DA5C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65CF87322AC715BF0054DA5C /* Localizable.strings */; };
 		65DBAF092A3788B90041C892 /* TrackersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBAF082A3788B90041C892 /* TrackersCell.swift */; };
 		65DBAF0C2A3DAE9B0041C892 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBAF0B2A3DAE9B0041C892 /* Tracker.swift */; };
 		65DBAF0F2A3DAFEC0041C892 /* IntExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DBAF0E2A3DAFEC0041C892 /* IntExt.swift */; };
@@ -99,7 +100,6 @@
 		658E9B322A1D448E0030A1D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		658E9B342A1D448E0030A1D3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		658E9B362A1D448E0030A1D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		658E9B392A1D448E0030A1D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		658E9B3C2A1D448E0030A1D3 /* Tracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tracker.xcdatamodel; sourceTree = "<group>"; };
 		658E9B3E2A1D448F0030A1D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		658E9B412A1D448F0030A1D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -115,6 +115,9 @@
 		659984B32A60E3C900D1968B /* UIColorMarshalling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorMarshalling.swift; sourceTree = "<group>"; };
 		659984B52A60EBCF00D1968B /* SelectionCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionCellProtocol.swift; sourceTree = "<group>"; };
 		65CF87212AC6F2880054DA5C /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
+		65CF872A2AC714700054DA5C /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = "../../../../../../Library/Mobile Documents/.Trash/Main.storyboard"; sourceTree = "<group>"; };
+		65CF87312AC715BF0054DA5C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		65CF87332AC7164C0054DA5C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		65DBAF082A3788B90041C892 /* TrackersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersCell.swift; sourceTree = "<group>"; };
 		65DBAF0B2A3DAE9B0041C892 /* Tracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		65DBAF0E2A3DAFEC0041C892 /* IntExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExt.swift; sourceTree = "<group>"; };
@@ -214,6 +217,7 @@
 		658E9B262A1D448E0030A1D3 = {
 			isa = PBXGroup;
 			children = (
+				65CF872D2AC7158F0054DA5C /* Localization */,
 				658E9B312A1D448E0030A1D3 /* Tracker */,
 				658E9B4B2A1D448F0030A1D3 /* TrackerTests */,
 				658E9B552A1D448F0030A1D3 /* TrackerUITests */,
@@ -250,7 +254,7 @@
 				658E9B322A1D448E0030A1D3 /* AppDelegate.swift */,
 				658E9B342A1D448E0030A1D3 /* SceneDelegate.swift */,
 				658E9B362A1D448E0030A1D3 /* ViewController.swift */,
-				658E9B382A1D448E0030A1D3 /* Main.storyboard */,
+				65CF872A2AC714700054DA5C /* Main.storyboard */,
 				658E9B3E2A1D448F0030A1D3 /* Assets.xcassets */,
 				658E9B402A1D448F0030A1D3 /* LaunchScreen.storyboard */,
 				658E9B432A1D448F0030A1D3 /* Info.plist */,
@@ -284,6 +288,14 @@
 				659984B12A60E23F00D1968B /* TrackerRecordStore.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		65CF872D2AC7158F0054DA5C /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				65CF87322AC715BF0054DA5C /* Localizable.strings */,
+			);
+			path = Localization;
 			sourceTree = "<group>";
 		};
 		65DBAF0A2A3DAE780041C892 /* Models */ = {
@@ -490,6 +502,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 658E9B262A1D448E0030A1D3;
 			productRefGroup = 658E9B302A1D448E0030A1D3 /* Products */;
@@ -509,8 +522,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				658E9B422A1D448F0030A1D3 /* LaunchScreen.storyboard in Resources */,
+				65CF87302AC715BF0054DA5C /* Localizable.strings in Resources */,
 				658E9B3F2A1D448F0030A1D3 /* Assets.xcassets in Resources */,
-				658E9B3A2A1D448E0030A1D3 /* Main.storyboard in Resources */,
+				65CF872B2AC714710054DA5C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -717,20 +731,21 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		658E9B382A1D448E0030A1D3 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				658E9B392A1D448E0030A1D3 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		658E9B402A1D448F0030A1D3 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				658E9B412A1D448F0030A1D3 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		65CF87322AC715BF0054DA5C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65CF87312AC715BF0054DA5C /* en */,
+				65CF87332AC7164C0054DA5C /* ru */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -740,6 +755,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -786,7 +802,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -800,6 +816,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -840,7 +857,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

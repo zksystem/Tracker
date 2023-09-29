@@ -5,3 +5,12 @@
   Created by Konstantin Zuykov on 29.09.2023.
   
 */
+
+"what_will_track" = "Что будем отслеживать?";
+"not_found" = "Ничего не найдено";
+"search" = "Поиск";
+"filters" = "Фильтры";
+"tab_trackers" = "Трекеры";
+"tab_statistics" = "Статистика";
+"day" = "день";
+"noghing_to_analyze" = "Анализировать пока нечего";

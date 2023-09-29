@@ -5,3 +5,12 @@
   Created by Konstantin Zuykov on 29.09.2023.
   
 */
+
+"what_will_track" = "What we will track?";
+"not_found" = "Nothing found";
+"search" = "Search";
+"filters" = "Filters";
+"tab_trackers" = "Trackers";
+"tab_statistics" = "Statistics";
+"day" = "day";
+"noghing_to_analyze" = "There is nothing to analyze yet";

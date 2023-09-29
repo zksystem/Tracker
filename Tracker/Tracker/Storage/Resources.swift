@@ -13,8 +13,8 @@ enum Resources {
     
     enum Strings {
         enum TabBar {
-            static var statistics = "Статистика"
-            static var tracker = "Трекеры"
+            static var statistics = NSLocalizedString("tab_statistics", tableName: "Localizable", comment: "tab_statistics")
+            static var tracker = NSLocalizedString("tab_trackers", tableName: "Localizable", comment: "tab_trackers")
         }
     }
     

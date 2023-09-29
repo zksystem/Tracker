@@ -95,10 +95,10 @@ class TrackersViewController : UIViewController {
             statusStack.isHidden = false
             filterButton.isHidden = true
             if(searchText.isEmpty) {
-                statusLabel.text = "Что будем отслеживать?"
+                statusLabel.text = NSLocalizedString("what_will_track", tableName: "Localizable", comment: "what_will_track") //"Что будем отслеживать?"
                 statusImageView.image = Resources.Images.Empty.emptyTracker
             } else {
-                statusLabel.text = "Ничего не найдено"
+                statusLabel.text = NSLocalizedString("not_found", tableName: "Localizable", comment: "not_found") //"Ничего не найдено"
                 statusImageView.image = Resources.Images.Error.tracker
             }
         } else {
@@ -111,7 +111,7 @@ class TrackersViewController : UIViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Трекеры"
+        label.text = NSLocalizedString("tab_trackers", tableName: "Localizable", comment: "tab_trackers") //"Трекеры"
         label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         label.textColor = .appBlack
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -122,7 +122,7 @@ class TrackersViewController : UIViewController {
     
     private let statusLabel: UILabel = {
         let label = UILabel()
-        label.text = "Что будем отслеживать?"
+        label.text = NSLocalizedString("what_will_track", tableName: "Localizable", comment: "what_will_track") //"Что будем отслеживать?"
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = .appBlack
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -164,7 +164,7 @@ class TrackersViewController : UIViewController {
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.placeholder = "Поиск"
+        searchBar.placeholder = NSLocalizedString("search", tableName: "Localizable", comment: "search") //"Поиск"
         searchBar.searchBarStyle = .minimal
         searchBar.delegate = self
         searchBar.translatesAutoresizingMaskIntoConstraints = false
@@ -186,7 +186,7 @@ class TrackersViewController : UIViewController {
     
     private lazy var filterButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Фильтры", for: .normal)
+        button.setTitle(NSLocalizedString("filters", tableName: "Localizable", comment: "filters") /* Фильтры */, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         button.tintColor = .appBlue
         button.layer.cornerRadius = 16
