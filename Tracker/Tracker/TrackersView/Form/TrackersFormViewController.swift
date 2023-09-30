@@ -132,10 +132,10 @@ final class TrackersFormViewController: UIViewController {
     private var isConfirmButtonEnabled: Bool = false {
         willSet {
             if newValue {
-                confirmButton.backgroundColor = .black
+                confirmButton.backgroundColor = .appBlack
                 confirmButton.isEnabled = true
             } else {
-                confirmButton.backgroundColor = .gray
+                confirmButton.backgroundColor = .appGray
                 confirmButton.isEnabled = false
             }
         }
@@ -324,7 +324,7 @@ private extension TrackersFormViewController {
         colorsCollection.dataSource = self
         colorsCollection.delegate = self
         
-        view.backgroundColor = .white
+        view.backgroundColor = .appWhite
         
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)

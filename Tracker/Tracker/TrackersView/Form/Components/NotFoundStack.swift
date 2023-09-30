@@ -11,7 +11,6 @@ final class NotFoundStack: UIStackView {
     private let notFoundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        //imageView.image = UIImage(named: "Star")
         return imageView
     }()
     
@@ -19,7 +18,7 @@ final class NotFoundStack: UIStackView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.textColor = .appBlack //.black
+        label.textColor = .appBlack
         return label
     }()
     

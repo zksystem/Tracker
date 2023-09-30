@@ -20,10 +20,10 @@ final class CategoryFormViewController: UIViewController {
     private var isConfirmButtonEnabled: Bool = false {
         willSet {
             if newValue {
-                button.backgroundColor = .black
+                button.backgroundColor = .appBlack
                 button.isEnabled = true
             } else {
-                button.backgroundColor = .gray
+                button.backgroundColor = .appGray
                 button.isEnabled = false
             }
         }
@@ -40,7 +40,7 @@ final class CategoryFormViewController: UIViewController {
         let button = RoundedButton(title: "Готово")
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         button.isEnabled = false
-        button.backgroundColor = .gray
+        button.backgroundColor = .appGray
         return button
     }()
     
@@ -88,19 +88,19 @@ final class CategoryFormViewController: UIViewController {
 private extension CategoryFormViewController {
     func setupContent() {
         title = "Новая категория"
-        view.backgroundColor = .white
+        view.backgroundColor = .appWhite
         view.addSubview(textField)
         view.addSubview(button)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            // textField
+
             textField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             textField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             textField.heightAnchor.constraint(equalToConstant: ListCellPlaceHolder.height),
-            // button
+
             button.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
