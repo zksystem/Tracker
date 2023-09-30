@@ -19,61 +19,88 @@ final class StatisticsViewController: UIViewController {
         return label
     }()
     
-    private let emptyImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = Resources.Images.Error.statistics
-        return imageView
-    }()
-    
-    private let emptyLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.text = NSLocalizedString("noghing_to_analyze", tableName: "Localizable", comment: "noghing_to_analyze") //"Анализировать пока нечего"
-        label.textColor = .appBlack
-        return label
-    }()
-    
-    private let emptyStack: UIStackView = {
+    private let notFoundStack = NotFoundStack(
+        label: NSLocalizedString("stubTitleStatistics", tableName: "Localizable", comment: "stubTitleStatistics"),
+        image: UIImage(named: "StatisticsError")
+    )
+
+    private let statisticsStack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
-        stack.alignment = .center
-        stack.spacing = 8
         return stack
     }()
+    
+    private let completedTrackersView = StatisticsView(name: "Трекеров завершено")
+    
+    // MARK: - Properties
+    
+    var statisticsViewModel: StatisticsViewModel?
+    private let trackerRecordStore = TrackerRecordStore()
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupContent()
         setupConstraints()
+        
+        statisticsViewModel?.onTrackersChange = { [weak self] trackers in
+            guard let self else { return }
+            self.checkContent(with: trackers)
+            self.setupCompletedTrackersBlock(with: trackers.count)
+        }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        statisticsViewModel?.viewWillAppear()
+    }
+    
+    // MARK: - Private
+    
+    private func checkContent(with trackers: [TrackerRecord]) {
+        if trackers.isEmpty {
+            notFoundStack.isHidden = false
+            statisticsStack.isHidden = true
+        } else {
+            notFoundStack.isHidden = true
+            statisticsStack.isHidden = false
+        }
+    }
+    
+    private func setupCompletedTrackersBlock(with count: Int) {
+        completedTrackersView.setNumber(count)
+    }
+
 }
 
 // MARK: - Layout methods
 
 private extension StatisticsViewController {
+    
     func setupContent() {
         view.backgroundColor = .appWhite
         view.addSubview(titleLabel)
-        view.addSubview(emptyStack)
-        
-        emptyStack.addArrangedSubview(emptyImageView)
-        emptyStack.addArrangedSubview(emptyLabel)
+        view.addSubview(notFoundStack)
+        view.addSubview(statisticsStack)
+        statisticsStack.addArrangedSubview(completedTrackersView)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            // titleLabel
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 52),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            //emptyStack
-            emptyStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            emptyStack.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 44),
+
+            notFoundStack.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            notFoundStack.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+
+            statisticsStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            statisticsStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            statisticsStack.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
+    
 }
 

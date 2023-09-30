@@ -9,7 +9,8 @@ import UIKit
 
 protocol TrackersFormViewControllerDelegate: AnyObject {
     func didTapCancelButton()
-    func didTapConfirmButton(categoryLabel: TrackerCategory, trackerToAdd: Tracker)
+    func didAddTracker(category: TrackerCategory, trackerToAdd: Tracker)
+    func didUpdateTracker(with data: Tracker.Data)
 }
 
 final class TrackersFormViewController: UIViewController {
@@ -87,7 +88,7 @@ final class TrackersFormViewController: UIViewController {
     }()
     
     private lazy var confirmButton: UIButton = {
-        let button = RoundedButton(title: "Создать")
+        let button = RoundedButton(title: nameConfirmButton)
         button.addTarget(self, action: #selector(didTapConfirmButton), for: .touchUpInside)
         button.isEnabled = false
         return button
@@ -104,8 +105,10 @@ final class TrackersFormViewController: UIViewController {
     // MARK: - Properties
     
     weak var delegate: TrackersFormViewControllerDelegate?
-    private let type: AddTrackerViewController.TrackerType
+    private let formType: FormType
+    private let trackerType: AddTrackerViewController.TrackerType
     private let trackerCategoryStore = TrackerCategoryStore()
+    private var nameConfirmButton = "Создать"
     
     private var data: Tracker.Data {
         didSet {
@@ -135,6 +138,14 @@ final class TrackersFormViewController: UIViewController {
                 confirmButton.backgroundColor = .gray
                 confirmButton.isEnabled = false
             }
+        }
+    }
+    
+    private func confirmButtonForEditMode() {
+        if formType == .add {
+            nameConfirmButton = "Создать"
+        } else {
+            nameConfirmButton = "Изменить"
         }
     }
     
@@ -172,15 +183,14 @@ final class TrackersFormViewController: UIViewController {
     
     // MARK: - Lifecycle
     
-    init(type: AddTrackerViewController.TrackerType, data: Tracker.Data = Tracker.Data()) {
-        self.type = type
-        self.data = data
-        switch type {
-        case .habit:
-            self.data.schedule = []
-        case .irregularEvent:
-            self.data.schedule = nil
-        }
+    init(
+        formType: TrackersFormViewController.FormType,
+        trackerType: AddTrackerViewController.TrackerType,
+        data: Tracker.Data?
+    ) {
+        self.formType = formType
+        self.trackerType = trackerType
+        self.data = data ?? Tracker.Data()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -192,6 +202,8 @@ final class TrackersFormViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        confirmButtonForEditMode()
+        setFormFields()
         
         setupContent()
         setupConstraints()
@@ -219,20 +231,24 @@ final class TrackersFormViewController: UIViewController {
     
     @objc
     private func didTapConfirmButton() {
-        guard let category, let emoji = data.emoji, let color = data.color else { return }
-        
-        let newTracker = Tracker(
-            label: data.label,
-            emoji: emoji,
-            color: color,
-            completedDaysCount: 0,
-            schedule: data.schedule
-        )
-        
-        delegate?.didTapConfirmButton(categoryLabel: category, trackerToAdd: newTracker)
+        switch formType {
+        case .add: addTracker()
+        case .edit: editTracker()
+        }
     }
     
     // MARK: - Methods
+    
+    private func setFormFields() {
+        textField.text = data.label
+        switch trackerType {
+        case .habit:
+            self.data.schedule = data.schedule ?? []
+        case .irregularEvent:
+            self.data.schedule = nil
+        }
+    }
+    
     
     private func checkFromValidation() {
         if data.label.count == 0 {
@@ -245,7 +261,7 @@ final class TrackersFormViewController: UIViewController {
             return
         }
         
-        if category == nil || data.emoji == nil || data.color == nil {
+        if data.category == nil || data.emoji == nil || data.color == nil {
             isConfirmButtonEnabled = false
             return
         }
@@ -257,15 +273,44 @@ final class TrackersFormViewController: UIViewController {
         
         isConfirmButtonEnabled = true
     }
+    
+    private func editTracker() {
+        delegate?.didUpdateTracker(with: data)
+    }
+        
+    private func addTracker() {
+        guard
+            let emoji = data.emoji,
+            let color = data.color,
+            let category = data.category
+        else { return }
+            
+        let newTracker = Tracker(
+            label: data.label,
+            emoji: emoji,
+            color: color,
+            category: category,
+            completedDaysCount: 0,
+            schedule: data.schedule,
+            isPinned: false
+        )
+
+        delegate?.didAddTracker(category: category, trackerToAdd: newTracker)
+    }
+    
 }
 
 // MARK: - Layout methods
 
 private extension TrackersFormViewController {
     func setupContent() {
-        switch type {
-        case .habit: title = "Новая привычка"
-        case .irregularEvent: title = "Новое нерегулярное событие"
+        switch formType {
+            case .add:
+                switch trackerType {
+                case .habit: title = "Новая привычка"
+                case .irregularEvent: title = "Новое нерегулярное событие"
+            }
+            case .edit: title = "Редактирование привычки"
         }
         
         textField.delegate = self
@@ -345,6 +390,12 @@ private extension TrackersFormViewController {
     }
 }
 
+extension TrackersFormViewController {
+    enum FormType {
+        case add, edit
+    }
+}
+
 // MARK: - UITextFieldDelegate
 
 extension TrackersFormViewController: UITextFieldDelegate {
@@ -370,10 +421,10 @@ extension TrackersFormViewController: UITableViewDataSource {
         
         if data.schedule == nil {
             position = .alone
-            value = category?.label
+            value = data.category?.label
         } else {
             position = indexPath.row == 0 ? .first : .last
-            value = indexPath.row == 0 ? category?.label : scheduleString
+            value = indexPath.row == 0 ? data.category?.label : scheduleString
         }
         
         listCell.configure(label: parameters[indexPath.row], value: value, position: position)
@@ -388,7 +439,7 @@ extension TrackersFormViewController: UITableViewDelegate {
         
         switch indexPath.row {
         case 0:
-            let categoriesViewController = CategoriesViewController(selectedCategory: category)
+            let categoriesViewController = CategoriesViewController(selectedCategory: data.category)
             categoriesViewController.delegate = self
             let navigationController = UINavigationController(rootViewController: categoriesViewController)
             navigationController.isModalInPresentation = true
@@ -433,14 +484,24 @@ extension TrackersFormViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView {
         case emojisCollection:
-            guard let emojiCell = collectionView.dequeueReusableCell(withReuseIdentifier: EmojiCell.identifier, for: indexPath) as? EmojiCell else { return UICollectionViewCell() }
+            guard let emojiCell = collectionView.dequeueReusableCell(withReuseIdentifier: EmojiCell.identifier, for: indexPath) as? EmojiCell else {
+                return UICollectionViewCell()
+            }
             let emoji = emojis[indexPath.row]
             emojiCell.configure(with: emoji)
+            if emoji == data.emoji {
+                emojiCell.select()
+                emojisCollection.selectItem(at: indexPath, animated: false, scrollPosition: .bottom)
+            }
             return emojiCell
         case colorsCollection:
             guard let colorCell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorCell.identifier, for: indexPath) as? ColorCell else { return UICollectionViewCell() }
             let color = colors[indexPath.row]
             colorCell.configure(with: color)
+            if let dataColor = data.color, UIColorMarshalling.makeHEX(from: color) == UIColorMarshalling.makeHEX(from: dataColor) {
+                colorCell.select()
+                colorsCollection.selectItem(at: indexPath, animated: false, scrollPosition: .bottom)
+            }
             return colorCell
         default:
             return UICollectionViewCell()
@@ -568,7 +629,7 @@ extension TrackersFormViewController {
 
 extension TrackersFormViewController: CategoriesViewControllerDelegate {
     func didConfirm(_ category: TrackerCategory) {
-        self.category = category
+        data.category = category
         parametersTableView.reloadData()
         dismiss(animated: true)
     }

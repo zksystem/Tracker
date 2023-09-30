@@ -12,16 +12,29 @@ struct Tracker: Identifiable {
     let label: String
     let emoji: String
     let color: UIColor
+    let category: TrackerCategory
     let completedDaysCount: Int
     let schedule: [Weekday]?
+    let isPinned: Bool
     
-    init(id: UUID = UUID(), label: String, emoji: String, color: UIColor, completedDaysCount: Int, schedule: [Weekday]?) {
+    init(
+        id: UUID = UUID(),
+        label: String,
+        emoji: String,
+        color: UIColor,
+        category: TrackerCategory,
+        completedDaysCount: Int,
+        schedule: [Weekday]?,
+        isPinned: Bool
+    ) {
         self.id = id
         self.label = label
         self.emoji = emoji
         self.color = color
+        self.category = category
         self.completedDaysCount = completedDaysCount
         self.schedule = schedule
+        self.isPinned = isPinned
     }
     
     init(tracker: Tracker) {
@@ -29,23 +42,38 @@ struct Tracker: Identifiable {
         self.label = tracker.label
         self.emoji = tracker.emoji
         self.color = tracker.color
+        self.category = tracker.category
         self.completedDaysCount = tracker.completedDaysCount
         self.schedule = tracker.schedule
+        self.isPinned = tracker.isPinned
     }
     
     init(data: Data) {
-        guard let emoji = data.emoji, let color = data.color else { fatalError() }
+        guard
+            let emoji = data.emoji,
+            let color = data.color,
+            let category = data.category
+        else { fatalError() }
         
         self.id = UUID()
         self.label = data.label
         self.emoji = emoji
         self.color = color
+        self.category = category
         self.completedDaysCount = data.completedDaysCount
         self.schedule = data.schedule
+        self.isPinned = data.isPinned
     }
     
     var data: Data {
-        Data(label: label, emoji: emoji, color: color, completedDaysCount: completedDaysCount, schedule: schedule)
+        Data(
+            label: label,
+            emoji: emoji,
+            color: color,
+            category: category,
+            completedDaysCount: completedDaysCount,
+            schedule: schedule
+        )
     }
 }
 
@@ -54,8 +82,10 @@ extension Tracker {
         var label: String = ""
         var emoji: String? = nil
         var color: UIColor? = nil
+        var category: TrackerCategory? = nil
         var completedDaysCount: Int = 0
         var schedule: [Weekday]? = nil
+        var isPinned: Bool = false
     }
 }
 
@@ -63,7 +93,7 @@ enum Weekday: String, CaseIterable, Comparable {
     case monday = "Понедельник"
     case tuesday = "Вторник"
     case wednesday = "Среда"
-    case thursday = "Четверг"
+    case thurshday = "Четверг"
     case friday = "Пятница"
     case saturday = "Суббота"
     case sunday = "Воскресенье"
@@ -73,22 +103,18 @@ enum Weekday: String, CaseIterable, Comparable {
         case .monday: return "Пн"
         case .tuesday: return "Вт"
         case .wednesday: return "Ср"
-        case .thursday: return "Чт"
+        case .thurshday: return "Чт"
         case .friday: return "Пт"
         case .saturday: return "Сб"
         case .sunday: return "Вс"
         }
     }
-
-    //MARK: - Comparator
     
     static func < (lhs: Weekday, rhs: Weekday) -> Bool {
         guard
             let first = Self.allCases.firstIndex(of: lhs),
             let second = Self.allCases.firstIndex(of: rhs)
-        else {
-            return false
-        }
+        else { return false }
         
         return first < second
     }
