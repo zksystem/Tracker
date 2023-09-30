@@ -167,11 +167,11 @@ class TrackersViewController : UIViewController {
         private func onDelete(_ tracker: Tracker) {
             let alert = UIAlertController(
                 title: nil,
-                message: "Уверены что хотите удалить трекер?",
+                message: NSLocalizedString("confirm_delete_tracker", tableName: "Localizable", comment: "cancel"),
                 preferredStyle: .actionSheet
             )
-            let cancelAction = UIAlertAction(title: "Отменить", style: .cancel)
-            let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+            let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", tableName: "Localizable", comment: "cancel"), style: .cancel)
+            let deleteAction = UIAlertAction(title: NSLocalizedString("delete", tableName: "Localizable", comment: "delete"), style: .destructive) { [weak self] _ in
                 guard let self else { return }
                 self.analytics.report(event: "click", params: ["screen": "Main", "item": "delete"]) /* analytics */
                 try? self.trackerStore.deleteTracker(tracker)
@@ -256,7 +256,7 @@ class TrackersViewController : UIViewController {
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.placeholder = NSLocalizedString("search", tableName: "Localizable", comment: "search") //"Поиск"
+        searchBar.placeholder = NSLocalizedString("search", tableName: "Localizable", comment: "search")
         searchBar.searchBarStyle = .minimal
         searchBar.delegate = self
         searchBar.translatesAutoresizingMaskIntoConstraints = false
@@ -378,13 +378,15 @@ extension TrackersViewController: UIContextMenuInteractionDelegate {
         
         return UIContextMenuConfiguration(actionProvider:  { actions in
             UIMenu(children: [
-                UIAction(title: tracker.isPinned ? "Открепить" : "Закрепить") { [weak self] _ in
+                UIAction(title: tracker.isPinned 
+                         ? NSLocalizedString("unpin", tableName: "Localizable", comment: "unpin")
+                         : NSLocalizedString("pin", tableName: "Localizable", comment: "pin")) { [weak self] _ in
                     self?.onTogglePin(tracker)
                 },
-                UIAction(title: "Редактировать") { [weak self] _ in
+                UIAction(title: NSLocalizedString("edit", tableName: "Localizable", comment: "edit")) { [weak self] _ in
                     self?.onEdit(tracker)
                 },
-                UIAction(title: "Удалить", attributes: .destructive) { [weak self] _ in
+                UIAction(title: NSLocalizedString("delete", tableName: "Localizable", comment: "delete"), attributes: .destructive) { [weak self] _ in
                     self?.onDelete(tracker)
                 }
             ])

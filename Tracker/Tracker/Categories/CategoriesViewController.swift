@@ -30,9 +30,9 @@ final class CategoriesViewController: UIViewController {
         table.backgroundColor = .clear
         return table
     }()
-    private let notFoundStack = NotFoundStack(label: "Привычки и события можно объединить по смыслу", image: UIImage(named: "Error"))
+    private let notFoundStack = NotFoundStack(label: NSLocalizedString("habits_can_be_joined", tableName: "Localizable", comment: "habits_can_be_joined"), image: UIImage(named: "Error"))
     private lazy var addButton: UIButton = {
-        let button = RoundedButton(title: "Добавить категорию")
+        let button = RoundedButton(title: NSLocalizedString("add_category", tableName: "Localizable", comment: "add_category"))
         button.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
         return button
     }()
@@ -80,11 +80,11 @@ final class CategoriesViewController: UIViewController {
     private func deleteCategory(_ category: TrackerCategory) {
         let alert = UIAlertController(
             title: nil,
-            message: "Эта категория точно не нужна?",
+            message: NSLocalizedString("confirm_delete_cat", tableName: "Localizable", comment: "confirm_delete_cat"),
             preferredStyle: .actionSheet
         )
-        let cancelAction = UIAlertAction(title: "Отменить", style: .cancel)
-        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+        let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", tableName: "Localizable", comment: "cancel"), style: .cancel)
+        let deleteAction = UIAlertAction(title: NSLocalizedString("delete", tableName: "Localizable", comment: "delete"), style: .destructive) { [weak self] _ in
             self?.viewModel.deleteCategory(category)
         }
         
@@ -99,7 +99,7 @@ final class CategoriesViewController: UIViewController {
 
 private extension CategoriesViewController {
     func setupContent() {
-        title = "Категория"
+        title = NSLocalizedString("category", tableName: "Localizable", comment: "category")
         view.backgroundColor = .appWhite
         view.addSubview(categoriesTableView)
         view.addSubview(addButton)

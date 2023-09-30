@@ -32,12 +32,12 @@ final class CategoryFormViewController: UIViewController {
     // MARK: - Layout elements
     
     private lazy var textField: UITextField = {
-        let textField = TextField(placeholder: "Введите название категории")
+        let textField = TextField(placeholder: NSLocalizedString("input_category_name", tableName: "Localizable", comment: "input_category_name"))
         textField.addTarget(self, action: #selector(didChangedTextField), for: .editingChanged)
         return textField
     }()
     private lazy var button: UIButton = {
-        let button = RoundedButton(title: "Готово")
+        let button = RoundedButton(title: NSLocalizedString("ready", tableName: "Localizable", comment: "ready"))
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         button.isEnabled = false
         button.backgroundColor = .appGray
@@ -87,7 +87,7 @@ final class CategoryFormViewController: UIViewController {
 
 private extension CategoryFormViewController {
     func setupContent() {
-        title = "Новая категория"
+        title = NSLocalizedString("new_category", tableName: "Localizable", comment: "new_category")
         view.backgroundColor = .appWhite
         view.addSubview(textField)
         view.addSubview(button)

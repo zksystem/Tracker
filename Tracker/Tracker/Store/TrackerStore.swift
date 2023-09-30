@@ -235,7 +235,7 @@ extension TrackerStore: TrackerStoreProtocol {
     
     func headerLabelInSection(_ section: Int) -> String? {
         if !pinnedTrackers.isEmpty && section == 0 {
-            return "Закрепленные"
+            return NSLocalizedString("pinned", tableName: "Localizable", comment: "pinned")
         }
         guard let category = sections[section].first?.category else { return nil }
         return category.label

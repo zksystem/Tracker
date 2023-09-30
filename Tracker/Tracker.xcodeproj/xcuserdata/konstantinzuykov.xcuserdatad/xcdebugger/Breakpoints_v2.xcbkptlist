@@ -46,8 +46,8 @@
             filePath = "Tracker/TrackersView/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "582"
-            endingLineNumber = "582"
+            startingLineNumber = "584"
+            endingLineNumber = "584"
             landmarkName = "didUpdate()"
             landmarkType = "7">
          </BreakpointContent>

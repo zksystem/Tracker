@@ -26,7 +26,7 @@ final class ScheduleViewController: UIViewController {
     
     private lazy var confirmButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 335, height: 60))
-        button.setTitle("Готово", for: .normal)
+        button.setTitle(NSLocalizedString("ready", tableName: "Localizable", comment: "ready"), for: .normal)
         button.backgroundColor = .appBlack
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.appWhite, for: .normal)
@@ -73,7 +73,7 @@ final class ScheduleViewController: UIViewController {
 
 private extension ScheduleViewController {
     func setupContent() {
-        title = "Расписание"
+        title = NSLocalizedString("schedule", tableName: "Localizable", comment: "schedule")
         view.backgroundColor = .appWhite
         view.addSubview(weekdaysTableView)
         view.addSubview(confirmButton)

@@ -31,7 +31,7 @@ final class StatisticsViewController: UIViewController {
         return stack
     }()
     
-    private let completedTrackersView = StatisticsView(name: "Трекеров завершено")
+    private let completedTrackersView = StatisticsView(name: NSLocalizedString("trackers_finished", tableName: "Localizable", comment: "trackers_finished"))
     
     // MARK: - Properties
     

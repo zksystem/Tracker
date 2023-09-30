@@ -30,7 +30,7 @@ final class TrackersFormViewController: UIViewController {
     }()
     
     private lazy var textField: UITextField = {
-        let textField = TextField(placeholder: "Введите название трекера")
+        let textField = TextField(placeholder: NSLocalizedString("input_tracker_name", tableName: "Localizable", comment: "input_tracker_name"))
         textField.addTarget(self, action: #selector(didChangedLabelTextField), for: .editingChanged)
         return textField
     }()
@@ -82,7 +82,7 @@ final class TrackersFormViewController: UIViewController {
     }()
     
     private lazy var cancelButton: UIButton = {
-        let button = RoundedButton.redButton(title: "Отменить")
+        let button = RoundedButton.redButton(title: NSLocalizedString("cancel", tableName: "Localizable", comment: "cancel"))
         button.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
         return button
     }()
@@ -108,7 +108,7 @@ final class TrackersFormViewController: UIViewController {
     private let formType: FormType
     private let trackerType: AddTrackerViewController.TrackerType
     private let trackerCategoryStore = TrackerCategoryStore()
-    private var nameConfirmButton = "Создать"
+    private var nameConfirmButton = NSLocalizedString("create", tableName: "Localizable", comment: "create")
     
     private var data: Tracker.Data {
         didSet {
@@ -116,7 +116,7 @@ final class TrackersFormViewController: UIViewController {
         }
     }
     
-    private lazy var category: TrackerCategory? = nil { //trackerCategoryStore.categories.randomElement() {
+    private lazy var category: TrackerCategory? = nil {
         didSet {
             checkFromValidation()
         }
@@ -124,7 +124,7 @@ final class TrackersFormViewController: UIViewController {
     
     private var scheduleString: String? {
         guard let schedule = data.schedule else { return nil }
-        if schedule.count == Weekday.allCases.count { return "Каждый день" }
+        if schedule.count == Weekday.allCases.count { return NSLocalizedString("every_day", tableName: "Localizable", comment: "every_day") }
         let shortForms: [String] = schedule.map { $0.shortForm }
         return shortForms.joined(separator: ", ")
     }
@@ -143,9 +143,9 @@ final class TrackersFormViewController: UIViewController {
     
     private func confirmButtonForEditMode() {
         if formType == .add {
-            nameConfirmButton = "Создать"
+            nameConfirmButton = NSLocalizedString("create", tableName: "Localizable", comment: "create")
         } else {
-            nameConfirmButton = "Изменить"
+            nameConfirmButton = NSLocalizedString("change", tableName: "Localizable", comment: "change")
         }
     }
     
@@ -164,7 +164,8 @@ final class TrackersFormViewController: UIViewController {
     
     private var validationMessageHeightConstraint: NSLayoutConstraint?
     private var parametersTableViewTopConstraint: NSLayoutConstraint?
-    private let parameters = ["Категория", "Расписание"]
+    private let parameters = [NSLocalizedString("category", tableName: "Localizable", comment: "category"),
+                            NSLocalizedString("schedule", tableName: "Localizable", comment: "schedule")]
     private let emojis = [
         "🙂", "😻", "🌺", "🐶", "❤️", "😱",
         "😇", "😡", "🥶", "🤔", "🙌", "🍔",
@@ -307,10 +308,10 @@ private extension TrackersFormViewController {
         switch formType {
             case .add:
                 switch trackerType {
-                case .habit: title = "Новая привычка"
-                case .irregularEvent: title = "Новое нерегулярное событие"
+                case .habit: title = NSLocalizedString("new_habit", tableName: "Localizable", comment: "new_habit")
+                case .irregularEvent: title = NSLocalizedString("new_irregular", tableName: "Localizable", comment: "new_irregular")
             }
-            case .edit: title = "Редактирование привычки"
+            case .edit: title = NSLocalizedString("edit_habit", tableName: "Localizable", comment: "edit_habit")
         }
         
         textField.delegate = self
@@ -581,7 +582,7 @@ extension TrackersFormViewController: UICollectionViewDelegateFlowLayout {
         var label: String
         switch collectionView {
         case emojisCollection: label = "Emoji"
-        case colorsCollection: label = "Цвет"
+        case colorsCollection: label = NSLocalizedString("color", tableName: "Localizable", comment: "color")
         default: label = ""
         }
         
