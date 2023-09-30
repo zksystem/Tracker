@@ -19,6 +19,7 @@ extension UIColor {
     static let appLightGray = UIColor(named: "Light Gray") ?? defaultForeground
     static let appRed = UIColor(named: "Red") ?? defaultForeground
     static let appWhite = UIColor(named: "White") ?? defaultForeground
+    static let appDatePickerColor = UIColor(named: "datePickerColor") ?? defaultForeground
     
     static let selection = [
         UIColor(named: "Color selection 1") ?? defaultForeground,
