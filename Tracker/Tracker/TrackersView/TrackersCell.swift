@@ -13,7 +13,21 @@ protocol TrackersCellDelegate: AnyObject {
 
 
 final class TrackersCell: UICollectionViewCell {
-
+    
+    // MARK: - Properties
+    
+    private let analytics = Analytics()
+    
+    static let identifier = "TrackerCell"
+    weak var delegate: TrackersCellDelegate?
+    private var tracker: Tracker?
+    private var days = 0 {
+        willSet {
+            daysCountLabel.text = String.localizedStringWithFormat(NSLocalizedString("numberOfDays", comment: "Number of days"), newValue)
+        }
+    }
+    
+    
     // MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -36,13 +50,15 @@ final class TrackersCell: UICollectionViewCell {
     
     // MARK: - Methods
     
-    func configure(with tracker: Tracker, days: Int, isCompleted: Bool) {
+    func configure(with tracker: Tracker, days: Int, isCompleted: Bool, interaction: UIInteraction) {
         self.tracker = tracker
         self.days = days
         cardView.backgroundColor = tracker.color
         emoji.text = tracker.emoji
         trackerLabel.text = tracker.label
         completeButton.backgroundColor = tracker.color
+        contentView.addInteraction(interaction)
+        pinImageView.isHidden = !tracker.isPinned
         toggleCompletedButton(to: isCompleted)
     }
     
@@ -121,21 +137,21 @@ final class TrackersCell: UICollectionViewCell {
         return uiButton
     }()
     
-    // MARK: - Properties
+    private let pinImageView: UIImageView = {
+            let image = UIImageView()
+            image.image = UIImage(named: "Pin")
+            image.isHidden = false
+            image.translatesAutoresizingMaskIntoConstraints = false
+            return image
+        }()
     
-    static let identifier = "TrackerCell"
-    weak var delegate: TrackersCellDelegate?
-    private var tracker: Tracker?
-    private var days = 0 {
-        willSet {
-            daysCountLabel.text = "\(newValue.days())"
-        }
-    }
+
     
     //MARK: complete button callback
     
     @objc
     private func didTapCompleteButton() {
+        analytics.report(event: "click", params: ["screen": "Main", "item": "track"]) /* analytics */
         guard let tracker else { return }
         delegate?.didTapCompleteButton(of: self, with: tracker)
     }
@@ -147,6 +163,7 @@ private extension TrackersCell {
     func setupContent() {
         contentView.addSubview(cardView)
         contentView.addSubview(iconView)
+        contentView.addSubview(pinImageView)
         contentView.addSubview(emoji)
         contentView.addSubview(trackerLabel)
         contentView.addSubview(daysCountLabel)
@@ -164,6 +181,11 @@ private extension TrackersCell {
             iconView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 12),
             iconView.widthAnchor.constraint(equalToConstant: 24),
             iconView.heightAnchor.constraint(equalTo: iconView.widthAnchor),
+            
+            pinImageView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -12),
+            pinImageView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 18),
+            pinImageView.widthAnchor.constraint(equalToConstant: 8),
+            pinImageView.heightAnchor.constraint(equalToConstant: 12),
 
             emoji.centerXAnchor.constraint(equalTo: iconView.centerXAnchor),
             emoji.centerYAnchor.constraint(equalTo: iconView.centerYAnchor),

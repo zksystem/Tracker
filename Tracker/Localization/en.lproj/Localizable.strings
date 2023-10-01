@@ -1,0 +1,63 @@
+/* 
+  Localizable.strings
+  Tracker
+
+  Created by Konstantin Zuykov on 29.09.2023.
+  
+*/
+
+"what_will_track" = "What we will track?";
+"not_found" = "Nothing found";
+"search" = "Search";
+"filters" = "Filters";
+"tab_trackers" = "Trackers";
+"tab_statistics" = "Statistics";
+"day" = "day";
+"noghing_to_analyze" = "There is nothing to analyze yet";
+"input_category_name" = "Input category name";
+"ready" = "Ready";
+"new_category" = "New category";
+"habits_can_be_joined" = "Habits can be joined by menings";
+"add_category" = "Add category";
+"confirm_delete_cat" = "Delete this category?";
+"cancel" = "Cancel";
+"delete" = "Delete";
+"category" = "Category";
+"pinned" = "Pinned";
+"onboard_tech" = "This is technology!";
+"onboard_msg1" = "Track only what you want";
+"onboard_msg2" = "Even if it's not liters of water and yoga";
+"schedule" = "Schedule";
+"trackers_finished" = "Trackers finished";
+"pin" = "Pin";
+"unpin" = "Unpin";
+"edit" = "Edit";
+"delete" = "Delete";
+"create" = "Create";
+"change" = "Change";
+"input_tracker_name" ="Input tracker name";
+"string_limit_38" = "limited by 38 chars";
+"every_day" = "Every day";
+"new_habit" = "New habit";
+"new_irregular" = "New irregular event";
+"edit_habit" = "Edit habit";
+"color" = "Color";
+"habit" = "Habit";
+"irregular" = "Irregular event";
+"create_tracker" = "Create tracker";
+"input_tracker_name" = "Input tracker name";
+"confirm_delete_tracker" = "Confirm delete tracker?";
+"wd_monday" = "Monday";
+"wd_tuesday" = "Tuesday";
+"wd_wednesday" = "Wednesday";
+"wd_thursday" = "Thursday";
+"wd_friday" = "Friday";
+"wd_saturday" = "Saturday";
+"wd_sunday" = "Sunday";
+"wd_monday_short" = "Mo";
+"wd_tuesday_short" = "Tu";
+"wd_wednesday_short" = "We";
+"wd_thursday_short" = "Th";
+"wd_friday_short" = "Fr";
+"wd_saturday_short" = "Sa";
+"wd_sunday_short" = "Su";

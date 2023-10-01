@@ -19,7 +19,7 @@ final class CategoryCell: UITableViewCell {
     private let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
+        label.textColor = .appBlack
         label.font = UIFont.systemFont(ofSize: 17)
         return label
     }()

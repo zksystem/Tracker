@@ -20,10 +20,10 @@ final class CategoryFormViewController: UIViewController {
     private var isConfirmButtonEnabled: Bool = false {
         willSet {
             if newValue {
-                button.backgroundColor = .black
+                button.backgroundColor = .appBlack
                 button.isEnabled = true
             } else {
-                button.backgroundColor = .gray
+                button.backgroundColor = .appGray
                 button.isEnabled = false
             }
         }
@@ -32,15 +32,15 @@ final class CategoryFormViewController: UIViewController {
     // MARK: - Layout elements
     
     private lazy var textField: UITextField = {
-        let textField = TextField(placeholder: "Введите название категории")
+        let textField = TextField(placeholder: NSLocalizedString("input_category_name", tableName: "Localizable", comment: "input_category_name"))
         textField.addTarget(self, action: #selector(didChangedTextField), for: .editingChanged)
         return textField
     }()
     private lazy var button: UIButton = {
-        let button = RoundedButton(title: "Готово")
+        let button = RoundedButton(title: NSLocalizedString("ready", tableName: "Localizable", comment: "ready"))
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         button.isEnabled = false
-        button.backgroundColor = .gray
+        button.backgroundColor = .appGray
         return button
     }()
     
@@ -87,20 +87,20 @@ final class CategoryFormViewController: UIViewController {
 
 private extension CategoryFormViewController {
     func setupContent() {
-        title = "Новая категория"
-        view.backgroundColor = .white
+        title = NSLocalizedString("new_category", tableName: "Localizable", comment: "new_category")
+        view.backgroundColor = .appWhite
         view.addSubview(textField)
         view.addSubview(button)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            // textField
+
             textField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             textField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             textField.heightAnchor.constraint(equalToConstant: ListCellPlaceHolder.height),
-            // button
+
             button.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),

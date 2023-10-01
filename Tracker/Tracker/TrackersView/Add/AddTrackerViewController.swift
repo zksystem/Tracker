@@ -17,7 +17,7 @@ final class AddTrackerViewController: UIViewController {
     
     private lazy var addHabitButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 335, height: 60))
-        button.setTitle("Привычка", for: .normal)
+        button.setTitle(NSLocalizedString("habit", tableName: "Localizable", comment: "habit"), for: .normal)
         button.backgroundColor = .appBlack
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.appWhite, for: .normal)
@@ -29,7 +29,7 @@ final class AddTrackerViewController: UIViewController {
     
     private lazy var addIrregularEventButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 335, height: 60))
-        button.setTitle("Нерегулярное событие", for: .normal)
+        button.setTitle(NSLocalizedString("irregular", tableName: "Localizable", comment: "irregular"), for: .normal)
         button.backgroundColor = .appBlack
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.appWhite, for: .normal)
@@ -62,7 +62,8 @@ final class AddTrackerViewController: UIViewController {
     }
     
     private var isValidationMessageVisible = false
-    private var parameters = ["Категория", "Расписание"]
+    private var parameters = [NSLocalizedString("category", tableName: "Localizable", comment: "category"),
+                        NSLocalizedString("schedule", tableName: "Localizable", comment: "schedule")]
     private let emojis = [ "🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶",
                           "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝", "😪"
     ]
@@ -81,7 +82,7 @@ final class AddTrackerViewController: UIViewController {
     
     @objc
     private func didTapAddHabitButton() {
-        title = "Новая привычка"
+        title = NSLocalizedString("new_habit", tableName: "Localizable", comment: "new_habit")
         delegate?.didSelectTracker(with: .habit)
     }
     
@@ -95,7 +96,7 @@ final class AddTrackerViewController: UIViewController {
 extension AddTrackerViewController {
     
     func setupContent() {
-        title = "Создание трекера"
+        title = NSLocalizedString("create_tracker", tableName: "Localizable", comment: "create_tracker")
         view.backgroundColor = .appWhite
         
         view.addSubview(buttonsStack)

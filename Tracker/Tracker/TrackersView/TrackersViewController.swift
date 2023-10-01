@@ -12,7 +12,9 @@ class TrackersViewController : UIViewController {
     
     // MARK: - Variables
     
-    private let trackerStore = TrackerStore()
+    private let analytics = Analytics()
+    
+    private var trackerStore: TrackerStoreProtocol
     private let trackerCategoryStore = TrackerCategoryStore()
     private let trackerRecordStore = TrackerRecordStore()
     
@@ -25,7 +27,7 @@ class TrackersViewController : UIViewController {
         height: 148,
         cellSpacing: 10
     )
-
+    
     private var categories = [TrackerCategory]()
     private var searchText = "" {
         didSet {
@@ -33,9 +35,21 @@ class TrackersViewController : UIViewController {
         }
     }
     
-    private var currentDate = Date.from(date: Date())
+    private var currentDate = Date.from(date: Date())!
     private var completedTrackers: Set<TrackerRecord> = []
-        
+    private var editingTracker: Tracker?
+    
+    
+    init(trackerStore: TrackerStoreProtocol) {
+        self.trackerStore = trackerStore
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) is not supported")
+    }
+
+    
     // MARK: - View did load
     
     override func viewDidLoad() {
@@ -51,6 +65,17 @@ class TrackersViewController : UIViewController {
         
         checkNumberOfTrackers()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+            analytics.report(event: "open", params: ["screen": "Main"])
+        }
+        
+        override func viewDidDisappear(_ animated: Bool) {
+            super.viewDidDisappear(animated)
+            analytics.report(event: "close", params: ["screen": "Main"])
+        }
+    
     
     // MARK: add button definition
     
@@ -70,10 +95,18 @@ class TrackersViewController : UIViewController {
     
     @objc
     private func didTapAddButton() {
+        analytics.report(event: "click", params: ["screen": "Main", "item": "add_track"]) /* analytics */
         let addTrackerViewController = AddTrackerViewController()
         addTrackerViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: addTrackerViewController)
         present(navigationController, animated: true)
+    }
+    
+    //MARK: - Filter button
+    
+    @objc
+    private func didTapFilterButton() {
+        analytics.report(event: "click", params: ["screen": "Main", "item": "filter"]) /* analytics */
     }
     
     //MARK: - ChangeDatePicker
@@ -95,23 +128,79 @@ class TrackersViewController : UIViewController {
             statusStack.isHidden = false
             filterButton.isHidden = true
             if(searchText.isEmpty) {
-                statusLabel.text = "Что будем отслеживать?"
+                statusLabel.text = NSLocalizedString("what_will_track", tableName: "Localizable", comment: "what_will_track") //"Что будем отслеживать?"
                 statusImageView.image = Resources.Images.Empty.emptyTracker
             } else {
-                statusLabel.text = "Ничего не найдено"
+                statusLabel.text = NSLocalizedString("not_found", tableName: "Localizable", comment: "not_found") //"Ничего не найдено"
                 statusImageView.image = Resources.Images.Error.tracker
             }
         } else {
             statusStack.isHidden = true
-            filterButton.isHidden = true
+            filterButton.isHidden = false
         }
     }
+    
+    private func presentFormController(
+            with data: Tracker.Data? = nil,
+            of trackerType: AddTrackerViewController.TrackerType,
+            formType: TrackersFormViewController.FormType
+        ) {
+            let trackerFormViewController = TrackersFormViewController(
+                formType: formType,
+                trackerType: trackerType,
+                data: data
+            )
+            trackerFormViewController.delegate = self
+            let navigationController = UINavigationController(rootViewController: trackerFormViewController)
+            navigationController.isModalInPresentation = true
+            present(navigationController, animated: true)
+        }
+        
+        private func onEdit(_ tracker: Tracker) {
+            analytics.report(event: "click", params: ["screen": "Main", "item": "edit"]) /* analytics */
+            
+            let type: AddTrackerViewController.TrackerType = tracker.schedule != nil ? .habit : .irregularEvent
+            editingTracker = tracker
+            presentFormController(with: tracker.data, of: type, formType: .edit)
+        }
+        
+        private func onDelete(_ tracker: Tracker) {
+            let alert = UIAlertController(
+                title: nil,
+                message: NSLocalizedString("confirm_delete_tracker", tableName: "Localizable", comment: "cancel"),
+                preferredStyle: .actionSheet
+            )
+            let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", tableName: "Localizable", comment: "cancel"), style: .cancel)
+            let deleteAction = UIAlertAction(title: NSLocalizedString("delete", tableName: "Localizable", comment: "delete"), style: .destructive) { [weak self] _ in
+                guard let self else { return }
+                self.analytics.report(event: "click", params: ["screen": "Main", "item": "delete"]) /* analytics */
+                try? self.trackerStore.deleteTracker(tracker)
+                deleteRecordTracker(with: tracker)
+               
+            }
+            
+            alert.addAction(deleteAction)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true)
+        }
+        
+        private func deleteRecordTracker(with tracker: Tracker) {
+            if let recordToRemove = completedTrackers.first(where: { $0.date == currentDate && $0.trackerId == tracker.id }) {
+                try? trackerRecordStore.remove(recordToRemove)
+            }
+        }
+        
+        private func onTogglePin(_ tracker: Tracker) {
+            try? trackerStore.togglePin(for: tracker)
+        }
+    
     
     // MARK: - Title label definition
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Трекеры"
+        label.text = NSLocalizedString("tab_trackers", tableName: "Localizable", comment: "tab_trackers") //"Трекеры"
         label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         label.textColor = .appBlack
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -122,7 +211,7 @@ class TrackersViewController : UIViewController {
     
     private let statusLabel: UILabel = {
         let label = UILabel()
-        label.text = "Что будем отслеживать?"
+        label.text = NSLocalizedString("what_will_track", tableName: "Localizable", comment: "what_will_track") //"Что будем отслеживать?"
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = .appBlack
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -142,12 +231,15 @@ class TrackersViewController : UIViewController {
     
     private lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
-        datePicker.backgroundColor = .appWhite
+        datePicker.backgroundColor = .appDatePickerColor
         datePicker.tintColor = .appBlue
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .compact
         datePicker.calendar = Calendar(identifier: .iso8601)
         datePicker.maximumDate = Date()
+        datePicker.layer.cornerRadius = 8
+        datePicker.layer.masksToBounds = true
+        datePicker.overrideUserInterfaceStyle = .light
         
         if let currentLocale = Locale.current.languageCode {
             datePicker.locale = Locale(identifier: currentLocale)
@@ -164,7 +256,7 @@ class TrackersViewController : UIViewController {
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.placeholder = "Поиск"
+        searchBar.placeholder = NSLocalizedString("search", tableName: "Localizable", comment: "search")
         searchBar.searchBarStyle = .minimal
         searchBar.delegate = self
         searchBar.translatesAutoresizingMaskIntoConstraints = false
@@ -186,12 +278,13 @@ class TrackersViewController : UIViewController {
     
     private lazy var filterButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Фильтры", for: .normal)
+        button.setTitle(NSLocalizedString("filters", tableName: "Localizable", comment: "filters") /* Фильтры */, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         button.tintColor = .appBlue
         button.layer.cornerRadius = 16
         button.backgroundColor = .appBlue
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(didTapFilterButton), for: .touchUpInside)
         return button
     }()
     
@@ -245,8 +338,8 @@ class TrackersViewController : UIViewController {
             titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             titleLabel.topAnchor.constraint(equalTo: addButton.bottomAnchor, constant: 13),
             
-            datePicker.widthAnchor.constraint(equalToConstant: 120),
-            datePicker.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            datePicker.widthAnchor.constraint(equalToConstant: 110),
+            datePicker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 13),
             datePicker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
             searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
@@ -268,6 +361,42 @@ class TrackersViewController : UIViewController {
         ])
     }
 }
+
+/////
+
+extension TrackersViewController: UIContextMenuInteractionDelegate {
+    
+    func contextMenuInteraction(
+        _ interaction: UIContextMenuInteraction,
+        configurationForMenuAtLocation location: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        guard
+            let location = interaction.view?.convert(location, to: collectionView),
+            let indexPath = collectionView.indexPathForItem(at: location),
+            let tracker = trackerStore.tracker(at: indexPath)
+        else { return nil }
+        
+        return UIContextMenuConfiguration(actionProvider:  { actions in
+            UIMenu(children: [
+                UIAction(title: tracker.isPinned 
+                         ? NSLocalizedString("unpin", tableName: "Localizable", comment: "unpin")
+                         : NSLocalizedString("pin", tableName: "Localizable", comment: "pin")) { [weak self] _ in
+                    self?.onTogglePin(tracker)
+                },
+                UIAction(title: NSLocalizedString("edit", tableName: "Localizable", comment: "edit")) { [weak self] _ in
+                    self?.onEdit(tracker)
+                },
+                UIAction(title: NSLocalizedString("delete", tableName: "Localizable", comment: "delete"), attributes: .destructive) { [weak self] _ in
+                    self?.onDelete(tracker)
+                }
+            ])
+        })
+    }
+    
+}
+
+
+
 
 // MARK: - UISearchBarDelegate
 
@@ -296,11 +425,7 @@ extension TrackersViewController: UISearchBarDelegate {
 extension TrackersViewController: AddTrackerViewControllerDelegate {
     func didSelectTracker(with type: AddTrackerViewController.TrackerType) {
         dismiss(animated: true)
-        let trackersFormViewController = TrackersFormViewController(type: type)
-        trackersFormViewController.delegate = self
-        let navigationController = UINavigationController(rootViewController: trackersFormViewController)
-        navigationController.isModalInPresentation = true
-        present(navigationController, animated: true)
+        presentFormController(of: type, formType: .add)
     }
 }
 
@@ -313,16 +438,10 @@ extension TrackersViewController: TrackersCellDelegate {
             cell.toggleCompletedButton(to: false)
             cell.decreaseCount()
         } else {
-            if let currentDate = currentDate {
-                let trackerRecord = TrackerRecord(trackerId: tracker.id, date: currentDate)
-                do {
-                    try trackerRecordStore.add(trackerRecord)
-                    cell.toggleCompletedButton(to: true)
-                    cell.increaseCount()
-                } catch let error {
-                    fatalError("Error increase tracker \(error)")
-                }
-            }
+            let trackerRecord = TrackerRecord(trackerId: tracker.id, date: currentDate)
+            try? trackerRecordStore.add(trackerRecord)
+            cell.toggleCompletedButton(to: true)
+            cell.increaseCount()
         }
     }
 }
@@ -330,13 +449,21 @@ extension TrackersViewController: TrackersCellDelegate {
 // MARK: - TrackerFormViewControllerDelegate
 
 extension TrackersViewController: TrackersFormViewControllerDelegate {
-    func didTapConfirmButton(categoryLabel: TrackerCategory, trackerToAdd: Tracker) {
+    func didAddTracker(category: TrackerCategory, trackerToAdd: Tracker) {
         dismiss(animated: true)
-        try? trackerStore.addTracker(trackerToAdd, with: categoryLabel)
+        try? trackerStore.addTracker(trackerToAdd, with: category)
+    }
+    
+    func didUpdateTracker(with data: Tracker.Data) {
+        guard let editingTracker else { return }
+        dismiss(animated: true)
+        try? trackerStore.updateTracker(editingTracker, with: data)
+        self.editingTracker = nil
     }
     
     func didTapCancelButton() {
         collectionView.reloadData()
+        editingTracker = nil
         dismiss(animated: true)
     }
 }
@@ -362,9 +489,14 @@ extension TrackersViewController: UICollectionViewDataSource {
         else {
             return UICollectionViewCell()
         }
-        
         let isCompleted = completedTrackers.contains { $0.date == currentDate && $0.trackerId == tracker.id }
-        trackerCell.configure(with: tracker, days: tracker.completedDaysCount, isCompleted: isCompleted)
+        let interaction = UIContextMenuInteraction(delegate: self)
+        trackerCell.configure(
+            with: tracker,
+            days: tracker.completedDaysCount,
+            isCompleted: isCompleted,
+            interaction: interaction
+        )
         trackerCell.delegate = self
         
         return trackerCell

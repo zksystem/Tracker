@@ -21,7 +21,7 @@ final class OnboardingViewController: UIPageViewController {
     }()
     
     private lazy var confirmButton: UIButton = {
-        let button = RoundedButton(color: .appBlack, titleColor: .appWhite, title: "Вот это технологии!")
+        let button = RoundedButton(color: .appBlack, titleColor: .appWhite, title: NSLocalizedString("onboard_tech", tableName: "Localizable", comment: "onboard_tech"))
         button.addTarget(self, action: #selector(didTapConfirmButton), for: .touchUpInside)
         return button
     }()
@@ -31,11 +31,11 @@ final class OnboardingViewController: UIPageViewController {
     var onConfirm: (() -> Void)?
     private let pages: [UIViewController] = [
         OnboardingPageViewController(
-            text: "Отслеживайте только то, что хотите",
+            text: NSLocalizedString("onboard_msg1", tableName: "Localizable", comment: "onboard_msg1"),
             backgroundImage: UIImage(named: "OnboardingBlue")!
         ),
         OnboardingPageViewController(
-            text: "Даже если это не литры воды и йога",
+            text: NSLocalizedString("onboard_msg2", tableName: "Localizable", comment: "onboard_msg2"),
             backgroundImage: UIImage(named: "OnboardingRed")!
         )
     ]

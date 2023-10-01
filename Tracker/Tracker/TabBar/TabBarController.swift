@@ -29,12 +29,11 @@ final class TabBarController: UITabBarController {
         tabBar.barTintColor = .appGray
         tabBar.backgroundColor = .appWhite
         
-        tabBar.layer.borderColor = UIColor(named: "Gray")?.cgColor
-        tabBar.layer.borderWidth = 1
-        tabBar.layer.masksToBounds = true
-        
-        let trackerViewController = TrackersViewController()
+        let trackerViewController = TrackersViewController(trackerStore: TrackerStore())
         let statisticViewController = StatisticsViewController()
+        let statisticsViewModel = StatisticsViewModel()
+        statisticViewController.statisticsViewModel = statisticsViewModel
+        
 
         trackerViewController.tabBarItem = UITabBarItem(
             title: Resources.Strings.TabBar.tracker,
